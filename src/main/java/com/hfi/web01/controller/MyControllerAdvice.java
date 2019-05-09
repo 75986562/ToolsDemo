@@ -1,5 +1,6 @@
 package com.hfi.web01.controller;
 import com.hfi.web01.exception.MyException;
+import com.hfi.web01.exception.RedisException;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
@@ -78,6 +79,20 @@ public class MyControllerAdvice {
     @ResponseBody
     @ExceptionHandler(value = MyException.class)
     public Map myErrorHandler(MyException ex) {
+        Map map = new HashMap();
+        map.put("code", ex.getCode());
+        map.put("msg", ex.getMsg());
+        return map;
+    }
+
+    /**
+     * 拦截捕捉自定义异常 RedisException.class
+     * @param ex
+     * @return
+     */
+    @ResponseBody
+    @ExceptionHandler(value = RedisException.class)
+    public Map redisErrorHandler(RedisException ex) {
         Map map = new HashMap();
         map.put("code", ex.getCode());
         map.put("msg", ex.getMsg());
